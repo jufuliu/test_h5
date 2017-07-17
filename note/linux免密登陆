@@ -1,0 +1,13 @@
+useradd jufu
+scp ~/.ssh/id_rsa.pub jufu@192.168.2.5:/home/jufu
+输入密码
+cat ~/id_rsa.pub >> ~/.ssh/authorized_keys
+
+chmod 755 ~
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/authorized_keys  
+
+添加sudo 权限
+vi  /etc/sudoers
+添加 jufu ALL=(ALL) NOPASSWD:ALL
+用wq!保存

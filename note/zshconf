@@ -1,0 +1,10 @@
+alias ssh5='ssh root@192.168.2.5 -i ~/.ssh/id_rsa_old'
+alias sshljc='ssh jufu@123.57.32.74 -i ~/.ssh/id_rsa_old'
+alias sshtools2='ssh jufu@59.110.21.18 -i ~/.ssh/id_rsa_old'
+alias sshserver01='ssh jufu@60.205.148.233 -i ~/.ssh/id_rsa_old'
+export M2_HOME=/Users/liujufu/program/apache-maven-3.3.9
+export PATH=$PATH:$M2_HOME/bin
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home
+#export JAVA_HOME=/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
+#alias jdk6='export JAVAHOME=$JAVA_6_HOME'
+#alias jdk8='export JAVAHOME=$JAVA_8_HOME'

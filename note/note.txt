@@ -1,0 +1,109 @@
+path:
+------------------
+D:\jft\frontweb\wxh5
+
+国内优秀Web前端Javascript框架库汇总列表(会长期更新) In Web 前端资讯,Web开发,资源工具 on 2012年05月22日 by TAT.Kinvix view: 11,549 8
+此列表会一直更新、维护下去，以帮助大家了解、推动国内Web前端技术框架的发展，请记住我们的永久地址：http://www.alloyteam.com/?p=1009，同时欢迎大家留言补充！
+Arale – http://aralejs.org/
+Como(盛大) – http://www.comsome.com
+EdoJs – http://www.edojs.com/
+DWZ – http://j-ui.com/
+JX(腾讯) – http://alloyteam.github.com/JX
+JSI – http://code.google.com/p/jsi/
+KISSY(淘宝) – http://www.kissyui.com
+KindEditor – https://github.com/kindsoft/kindeditor
+NJF – http://code.google.com/p/njf/
+QWrap(百度) – http://www.qwrap.com
+Tangram(百度) – http://tangram.baidu.com
+===================================================================================================
+redis:
+------------------
+redis-cli -h 123.56.186.120
+select 9
+del cn.jf180.jeecg.orm.dao.TsroleUserDao
+del cn.jf180.jeecg.orm.dao.TsroleFunctionDao
+
+===================================================================================================
+Nginx-jft:
+------------------
+/etc/rc.d/init.d/nginx -s reload
+vi /aliyun/server/nginx/conf/vhosts/d.conf
+vi /aliyun/server/nginx/conf/vhosts/default.conf
+vi /aliyun/server/nginx/conf/vhosts/back2.conf
+
+Nginx -Mac:
+sudo /usr/local/bin/nginx  #启动
+sudo /usr/local/bin/nginx -s reload  #重启
+sudo /usr/local/bin/nginx -s stop  #停止
+===================================================================================================
+git:
+------------------
+git@192.168.2.7:frontweb/wxh5.git
+git remote add origin git@192.168.2.7:frontweb/wxh5.git
+git push -u origin master
+*****
+git add .
+git log --pretty=format:"%H - %an %cd -- %s"   格式化git log
+git commit -m 'message' 
+git cherry-pick 'id' 把commit 的代码从一个分支放到另一个分支  
+git branch -vv  查看本地和远程分支的对应关系 
+git pull --rebase #拉取最新代码
+git push origin master
+git fetch -p   远程删除分支后,本地remote tracking更新
+git branch develop origin/master
+git checkout branchName #切换分支
+git checkout fileName  # 恢复某个已修改的文件（撤销未提交的修改）
+git checkout -b develop origin/master #以origin/master为基础，建立develop分支并切换到该分支(相当于合并前两个命令)
+
+git reset HEAD~1  #回到某次commit，提交及之前的commit都会被保留，但是此次之后的修改都会被退回到暂存区
+Git reset —hard committed.  回退到某次commit
+git revert d35527929a3ae335d732793c129bab117aea205e #生成一个新的commit来撤销某次commit，此次commit之前的commit都会被保留
+
+git stash  隐藏工作区的修改内容
+git stash list  隐藏的列表
+git stash pop  恢复隐藏的工作区的内容
+
+git rm --cached file_path 从版本控制中移除
+===================================================================================================
+maven:
+------------------
+mvn archetype:generate -DgroupId=com.mycompany.app -DartifactId=my-app -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false  #创建Maven的普通java项目
+
+mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DarchetypeArtifactId=maven-archetype-webapp -DgroupId=com.mycompany.app -DartifactId=my-webapp -DinteractiveMode=false  #创建Maven的Web项目
+===================================================================================================
+linux:
+------------------
+ps -ef | grep nginx
+ps -ef | grep portal
+netstat -anop | grep 23376 //查看pid为23376所占的端口
+lsof -i:80  //查看80端口占用情况
+cd -   返回上次的目录
+rz: Receive Zmodem  上传文件
+sz: Send Zmodem  下载文件
+ps -eo pid,user,group,euser,egroup,cmd. 查看进程pid,用户，......
+
+===================================================================================================
+Apache Mac:
+
+/etc/apache2    //apache安装路径
+/Library/WebServer/Documents   //apache webserver 部署路径
+sudo apachectl start //启动apache
+sudo /usr/sbin/apachectl stop
+chmod -R 755 your_folder 修改权限
+===================================================================================================
+Apache linux:
+service httpd start 启动
+service httpd restart 重新启动
+service httpd stop 停止服务
+重要目录和文件如下：
+/etc/httpd/是Apache服务器的根目录
+/etc/httpd/conf/httpd.conf是Apache服务器的主配置文件，其中包含指定文档root的配置
+/var/www/html/是Apache服务器的文档根目录
+/etc/init.d/httpd是Apache服务器启动脚本文件
+
+===================================================================================================
+Php
+Php —-init  #查看php启用了那些配置  
+/usr/local/Cellar/php56/5.6.30_6/sbin/php56-fpm start   #nginx 配置php-fpm后启动php-fpm
+
+

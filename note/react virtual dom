@@ -1,0 +1,3 @@
+react virtual dom ：虚拟dom是一个模拟真实dom的js对象，如果要改变元素状态，是先改变虚拟dom对象，再改变真实dom。
+
+diff算法：当有变化产生时，一个新的virtual dom 对象会被创建并计算新旧的virtual dom 之间的差别，之后这些差别会应用到真实的dom上。

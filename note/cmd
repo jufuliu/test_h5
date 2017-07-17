@@ -1,0 +1,9 @@
+
+maven ++++
+
+mvn archetype:generate -DgroupId=cn.ljf.app -DartifactId=my-app -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false   #创建java项目
+
+mvn archetype:generate -DgroupId=cn.luxh.app -DartifactId=my-web-app -DarchetypeArtifactId=maven-archetype-webapp -DinteractivMode=false   #创建javaweb项目
+
+==========================================================================================================================================
+
