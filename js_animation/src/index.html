@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js animation</title>
+
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .list-wrap{
+            position: absolute;
+            left: 0;
+            top: 50px;
+            width: 200px;
+            height: 50px;
+            /*overflow: hidden;*/
+            margin-top: -25px;
+        }
+
+        .list{
+            position: absolute;
+            list-style: none;
+
+        }
+        .list li{
+            position: absolute;
+            top:0;
+            width: 190px;
+            height: 45px;
+            margin-bottom: 5px;
+            background-color: bisque;
+            border-radius: 5px;
+            line-height: 50px;
+            text-align: center;
+            opacity: 0.0;
+        }
+
+        .list li:nth-child(2n){
+
+            background-color: #bdff9d;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="list-wrap">
+        <ul class="list" id="zoumadeng">
+            <li class="list-item">item1</li>
+            <li class="list-item">item2</li>
+            <li class="list-item">item3</li>
+            <li class="list-item">item4</li>
+            <li class="list-item">item5</li>
+            <li class="list-item">item1</li>
+
+        </ul>
+    </div>
+<button id="btn">startmove</button>
+</body>
+<script>
+
+    window.onload=function () {
+
+        document.getElementById('btn').onclick=startMove;
+//        var list=document.getElementById('zoumadeng');
+//        list.onclick=startMove;
+    }
+
+    var timer=null;
+    var Tween = {
+        easeOut: function(t,b,c,d){
+            return -c *(t/=d)*(t-2) + b;
+        },
+        easeOut: function(t, b, c, d) {
+            if ((t /= d) < (1 / 2.75)) {
+                return c * (7.5625 * t * t) + b;
+            } else if (t < (2 / 2.75)) {
+                return c * (7.5625 * (t -= (1.5 / 2.75)) * t + .75) + b;
+            } else if (t < (2.5 / 2.75)) {
+                return c * (7.5625 * (t -= (2.25 / 2.75)) * t + .9375) + b;
+            } else {
+                return c * (7.5625 * (t -= (2.625 / 2.75)) * t + .984375) + b;
+            }
+        },
+        easeInOut: function(t, b, c, d) {
+            if (t < d / 2) {
+                return Tween.Bounce.easeIn(t * 2, 0, c, d) * .5 + b;
+            } else {
+                return Tween.Bounce.easeOut(t * 2 - d, 0, c, d) * .5 + c * .5 + b;
+            }
+        },
+        linear:function (t,b,c,d) {
+            return c*t/d + b;
+        }
+    }
+    function startMove() {
+
+        var list=document.getElementById('zoumadeng');
+
+        var children=list.children;
+        var top=[50,100,150,200,250,300];
+        for(var i=0;i< children.length;i++){
+            animate1(children[i],{marginTop:top[i],opacity:0.8},1000,'easeOut');
+        }
+
+    }
+    function animate1(ele, style, time, animate) {
+        time = time || 300;
+        animate = animate || 'Linear';
+
+        var d = Math.ceil(time / (1000/30)), //计算次数,每秒30帧
+                t = 0;
+
+        var b = 1, c = 0.1;
+        var begins = [], ends= [],changeValue=[];
+        for (key in style) {
+            if(key == 'opacity'){
+                begins[key] = parseFloat(window.getComputedStyle(ele)[key]);
+
+            }else{
+                begins[key] = parseInt(window.getComputedStyle(ele)[key]);
+            }
+            changeValue[key]=style[key]-begins[key];
+        }
+
+        function run() {
+            for (key in style) {
+
+                if(key == 'opacity'){
+
+                    ele.style[key] = Tween[animate](t, begins[key], changeValue[key], d);
+                }else{
+
+                    ele.style[key] = Tween[animate](t, begins[key], changeValue[key], d) + 'px';
+                }
+            }
+            console.log(getStyle(ele,'marginTop'))
+            t++;
+            if (t <= d) {
+                requestAnimationFrame(run);
+            }
+
+        }
+        run();
+    }
+
+
+
+//    t:timestamp，指缓动效果开始执行到当前帧开始执行时经过的时间段，单位ms
+//    b:beginning position，起始位置
+//    c:change，要移动的距离，就是终点位置减去起始位置。
+//    d: duration ，缓和效果持续的时间。
+
+
+
+    /*
+     * 缓动动画函数
+     * 原理：盒子原本的样式值 + "步长"（不断变化的值）；达到目标值后停止缓动。
+     * obj：指定的节点对象
+     * attr_json：样式属性和值的集合（json对象格式，如{width:200px,left:10px...}）
+     * fn:回调函数，动画执行完后执行的函数
+     * 注意：如果控制 盒子的透明度 在本函数json属性集合中需要使用opacity,控制层级需要使用zIndex
+     * */
+    function animate(obj,attr_json,fn)
+    {
+        //清除定时器，防止函数未执行完而连续操作本函数带来的乱像
+        clearInterval(obj.timer);
+        /*
+         创建定时器,实现动画效果
+         */
+        obj.timer=setInterval(function(){
+            var flag=true;  //清楚定时器的标识
+            /*遍历并操作json数据集合对象中样式属性和值*/
+            for(var attr in attr_json){
+                var current=0;      //盒子原本样式的值
+                /*如果处理的属性是透明度*/
+                if(attr=="opacity"){
+                    //因为ie不支持 opacity，返回的是undefined，所以如果不支持就返回默认值0
+                    current=Math.round(parseInt(getStyle(obj,attr)*100))||0;
+                }else{  //其他属性值
+                    current=parseInt(getStyle(obj,attr));
+                }
+
+                //计算 “步长"=（属性目标值-盒子原本样式属性的值）/10；”步长越来越小“
+                var step=(attr_json[attr]-current)/10;
+                //因为”步长“有可能除不尽，所以最终可能造成误差，所以根据目标值向上或向下取整
+                step=step>0?Math.ceil(step):Math.floor(step);
+
+                //判断操作的属性是否是透明度；
+                if(attr=="opacity"){
+                    if("opacity" in obj.style){   //如果浏览器支持 ”opacity“  IE6、7、8不支持
+                        //obj.style.opacity=0.4;
+                        obj.style.opacity=(current+step)/100;
+                    }else{   //IE6、7、8支持
+                        // obj.style.filter = alpha(opacity = 30)
+                        obj.style.filter= "alpha(opacity = "+(current + step)* 10+")";
+                    }
+
+                }//判断操作的属性是否是层级
+                else if(attr=="zIndex"){
+                    obj.style.zIndex=current+step;
+                }
+                //其他属性
+                else{
+                    obj.style[attr]=(current+step)+"px";
+                }
+
+                if(current!=attr_json[attr]){ //如果有一个属性值没达到目标，则不清楚定时器
+                    flag=false;
+                }
+            }
+            if(flag){
+                clearInterval(obj.timer);  //清除定时器
+                if(fn){ //如果传入了回调函数则执行回调函数
+                    fn();
+                }
+            }
+        },20)
+    }
+
+
+    /*
+     * 获取指定节点对象的样式属性的值
+     * obj:指定的节点对象
+     * attr:指定的样式的属性名称
+     * */
+    function getStyle(obj,attr){
+        if(obj.currentStyle){   //兼容方法 支持IE、Opera浏览器的
+            return obj.currentStyle[attr];
+        }else{                  //符合 w3c标准的写法
+            return window.getComputedStyle(obj,null)[attr];
+        }
+    }
+    var getCoords = function(el){
+        var box = el.getBoundingClientRect(),
+                doc = el.ownerDocument,
+                body = doc.body,
+                html = doc.documentElement,
+                clientTop = html.clientTop || body.clientTop || 0,
+                clientLeft = html.clientLeft || body.clientLeft || 0,
+                top  = box.top  + (self.pageYOffset || html.scrollTop  ||  body.scrollTop ) - clientTop,
+                left = box.left + (self.pageXOffset || html.scrollLeft ||  body.scrollLeft) - clientLeft
+        return { 'top': top, 'left': left };
+    };
+</script>
+</html>

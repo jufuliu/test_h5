@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>camare</title>
+
+    <style>
+        .video {
+            background-color: #4fc167;
+        }
+
+        .btn {
+            height: 40px;
+
+        }
+
+        .canvas {
+            background-color: #d85266;
+            width: 320px;
+            height: 400px;
+        }
+        .mt{
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!--<input type="image" accept="image/*" capture="camera"/>-->
+
+<p>
+    <label>请选择一个图像文件：</label>
+    <input class="mt" type="file"  accept="image/*" capture="camera"/>
+    <input class="mt" type="file"  accept="camera"/>
+    <input class="mt" type="image"  accept="image/*"/>
+    <!--<camera type="file" accept="image/*"></camera>-->
+</p>
+<div id="rrr"></div>
+<!--<video id="video" autoplay="true" style='width:320px;height:400px'></video>-->
+<!--<button  class="btn" id='picture'>PICTURE</button>-->
+<!--<canvas id="canvas" width="320px" height="400px"></canvas>-->
+
+<!--<style scoped>-->
+<!--video { transform: scaleX(-1); }-->
+<!--p { text-align: center; }-->
+<!--</style>-->
+<!--<h1>Snapshot Kiosk</h1>-->
+<!--<section id="splash">-->
+<!--<p id="errorMessage">Loading...</p>-->
+<!--</section>-->
+<!--<section id="app" hidden>-->
+<!--<p><video id="monitor" autoplay></video> <canvas id="photo"></canvas>-->
+<!--<p><input type=button value="&#x1F4F7;" onclick="snapshot()">-->
+<!--</section>-->
+<!--<script>-->
+<!--window,onload=function () {-->
+<!--navigator.getUserMedia({video:true}, gotStream, noStream);-->
+<!--var video = document.getElementById('monitor');-->
+<!--var canvas = document.getElementById('photo');-->
+<!--function gotStream(stream) {-->
+<!--video.src = URL.createObjectURL(stream);-->
+<!--video.onerror = function () {-->
+<!--stream.stop();-->
+<!--};-->
+<!--stream.onended = noStream;-->
+<!--video.onloadedmetadata = function () {-->
+<!--canvas.width = video.videoWidth;-->
+<!--canvas.height = video.videoHeight;-->
+<!--document.getElementById('splash').hidden = true;-->
+<!--document.getElementById('app').hidden = false;-->
+<!--};-->
+<!--}-->
+<!--function noStream() {-->
+<!--document.getElementById('errorMessage').textContent = 'No camera available.';-->
+<!--}-->
+<!--function snapshot() {-->
+<!--canvas.getContext('2d').drawImage(video, 0, 0);-->
+<!--}-->
+<!--}-->
+
+<!--</script>-->
+<!--<button id="run">开启网络摄像头</button>-->
+<!--<Br/>-->
+<!--<video id="video"></video>-->
+</body>
+
+<script>
+
+    function photo() {
+
+        navigator.getUserMedia || (navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia || navigator.msGetUserMedia);
+
+        if (!navigator.getUserMedia) {
+            alert("您的浏览器不支持WEBRTC");
+            return;
+        }
+
+        var btn = document.getElementById('run');
+        btn.onclick = startWebcam;
+
+        function startWebcam(e) {
+            navigator.getUserMedia({
+                video: true,
+                audio: true
+            }, onSuccess, onError);
+
+            function onSuccess(stream) {
+
+                var video = document.getElementById('webcam');
+
+                if (window.URL) {
+                    video.src = window.URL.createObjectURL(stream);
+                } else {
+                    video.src = stream;
+                }
+
+                video.autoplay = true;
+                //or video.play();
+            }
+
+            function onError(e) {
+                alert(e)
+            }
+        }
+    }
+    function getMedia() {
+
+        if (navigator.mediaDevices === undefined) {
+            navigator.mediaDevices = {};
+        }
+
+// Some browsers partially implement mediaDevices. We can't just assign an object
+// with getUserMedia as it would overwrite existing properties.
+// Here, we will just add the getUserMedia property if it's missing.
+        if (navigator.mediaDevices.getUserMedia === undefined) {
+            navigator.mediaDevices.getUserMedia = function(constraints) {
+
+                // First get ahold of the legacy getUserMedia, if present
+                var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+                // Some browsers just don't implement it - return a rejected promise with an error
+                // to keep a consistent interface
+                if (!getUserMedia) {
+                    return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+                }
+
+                // Otherwise, wrap the call to the old navigator.getUserMedia with a Promise
+                return new Promise(function(resolve, reject) {
+                    getUserMedia.call(navigator, constraints, resolve, reject);
+                });
+            }
+        }
+
+        navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+                .then(function(stream) {
+                    var video = document.querySelector('video');
+                    // Older browsers may not have srcObject
+                    if ("srcObject" in video) {
+                        video.srcObject = stream;
+                    } else {
+                        // Avoid using this in new browsers, as it is going away.
+                        video.src = window.URL.createObjectURL(stream);
+                    }
+                    video.onloadedmetadata = function(e) {
+                        video.play();
+                    };
+                })
+                .catch(function(err) {
+                    alert(err.name + ": " + err.message);
+                });
+    }
+//    getMedia();
+    //    var video = document.getElementById("video");
+    //    var context = canvas.getContext("2d")
+    //    var errocb = function () {
+    //        alert('sth wrong!');
+    //    }
+    //    try {
+    //        alert(navigator.getUserMedia)
+    //        if (navigator.getUserMedia) { // 标准的API
+    //            navigator.getUserMedia({ "video": true }, function (stream) {
+    //                video.src = stream;
+    //                video.play();
+    //                alert(video.toString())
+    //            }, errocb);
+    //        } else if (navigator.webkitGetUserMedia) { // WebKit 核心的API
+    //            navigator.webkitGetUserMedia({ "video": true }, function (stream) {
+    //                video.src = window.webkitURL.createObjectURL(stream);
+    //                video.play();
+    //                alert(video.toString()+'---')
+    //            }, errocb);
+    //            alert(navigator.webkitGetUserMedia+'---')
+    //        }
+    //    }catch (e) {
+    //        alert(e.toString());
+    //    }
+    //
+    //
+    //    document.getElementById("picture").addEventListener("click", function () {
+    //        context.drawImage(video, 0, 0, 640, 480);
+    //        alert(video.toString())
+    //    });
+</script>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js animation</title>
+
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .list-wrap{
+            position: absolute;
+            left: 0;
+            top: 50px;
+            width: 200px;
+            height: 50px;
+            /*overflow: hidden;*/
+            margin-top: -25px;
+        }
+
+        .list{
+            position: absolute;
+            list-style: none;
+
+        }
+        .list li{
+            position: absolute;
+            top:0;
+            width: 190px;
+            height: 45px;
+            margin-bottom: 5px;
+            background-color: bisque;
+            border-radius: 5px;
+            line-height: 50px;
+            text-align: center;
+            opacity: 0.0;
+        }
+
+        .list li:nth-child(2n){
+
+            background-color: #bdff9d;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="list-wrap">
+        <ul class="list" id="zoumadeng">
+            <li class="list-item">item1</li>
+            <li class="list-item">item2</li>
+            <li class="list-item">item3</li>
+            <li class="list-item">item4</li>
+            <li class="list-item">item5</li>
+            <li class="list-item">item1</li>
+
+        </ul>
+    </div>
+<button id="btn">startmove</button>
+</body>
+<script>
+    var APPCommon = {
+//        iphoneSchema: 'XingboTV://',
+        iphoneSchema: 'tmall://tmallclient/?http://jf180.ews.m.jaeapp.com/t/jf/v1.html',
+        iphoneTabao:'taobao://jf180.ews.m.jaeapp.com/t/jf/v1.html',
+
+//        iphoneDownUrl: 'https://itunes.apple.com/cn/app/xing-botv-mei-nu-shuai-ge3d/id1098066581?l=en&mt=8',
+
+        androidSchema: 'tmall://tmallclient/?http://jf180.ews.m.jaeapp.com/t/jf/v1.html',
+        androidTaobao:'taobao://jf180.ews.m.jaeapp.com/t/jf/v1.html',
+
+        tmallUrl:'tmall://tmallclient/?http://jf180.ews.m.jaeapp.com/t/jf/v1.html',
+//        androidDownUrl: 'http://webrs.xingbo.tv/app/XingboLive-release.apk',
+        openApp: function(){
+            var this_  =  this;
+            //微信
+            if(this_.isWeixin()){
+                $(".weixin-tip").css("height",$(window).height());
+                $(".weixin-tip").show();
+                $('.weixin-tip').on('touchstart', function () {
+                    $(".weixin-tip").hide();
+                });
+
+            }else{//非微信浏览器
+                try {
+
+                    var timeout, t = 1000, hasApp = true;
+                    setTimeout(function () {
+                        if (hasApp) {
+//                                alert('安装了app');
+
+                            if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
+                                window.location = this.iphoneTabao;
+                            }else if (navigator.userAgent.match(/android/i)) {
+                                try {
+                                    window.location = this.androidTaobao;
+//                        setTimeout(function(){
+//                            window.location=this_.androidTaobao;
+//                            setTimeout(function () {
+//                                alert('未安装天猫app或手淘')
+//                            },500)
+//
+//
+//                        },500);
+                                } catch(e) {}
+                            }
+                        } else {
+                            alert('未安装app');
+                        }
+                        document.body.removeChild(ifr);
+                    }, 2000)
+
+                    var t1 = Date.now();
+                    var ifr = document.createElement("iframe");
+                    ifr.setAttribute('src', url);
+                    ifr.setAttribute('style', 'display:none');
+                    document.body.appendChild(ifr);
+                    timeout = setTimeout(function () {
+                        var t2 = Date.now();
+                        if (!t1 || t2 - t1 < t + 100) {
+                            hasApp = false;
+                        }
+                    }, t);
+                } catch(e) {}
+
+
+            }
+        },
+        isWeixin: function(){ //判断是否是微信
+            var ua = navigator.userAgent.toLowerCase();
+            if (ua.match(/MicroMessenger/i) == "micromessenger") {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+    };
+//    APPCommon.openApp();
+    var tmallUrl='tmall://tmallclient/?http://jf180.ews.m.jaeapp.com/t/jf/v1.html',
+            taobaoUrl='taobao://jf180.ews.m.jaeapp.com/t/jf/v1.html';
+    function openApp() {
+        var timeout, t = 1000, hasApp = true;
+        setTimeout(function () {
+            if (hasApp) {
+//                alert('安装了app');
+                window.location = taobaoUrl;
+            } else {
+                alert('未安装app');
+            }
+            document.body.removeChild(ifr);
+        }, 2000)
+
+        var t1 = Date.now();
+        var ifr = document.createElement("iframe");
+        ifr.setAttribute('src', 'tabao://');
+        ifr.setAttribute('style', 'display:none');
+        document.body.appendChild(ifr);
+        timeout = setTimeout(function () {
+            var t2 = Date.now();
+            if (!t1 || t2 - t1 < t + 100) {
+                hasApp = false;
+            }
+        }, t);
+    }
+
+    function openApp2() {
+
+        window.location = taobaoUrl;
+        setTimeout(function(){
+//            alert('未安装app');
+        },500);
+    }
+    function openApp3() {
+        var loadDateTime = new Date();
+        window.setTimeout(function() {
+            var timeOutDateTime = new Date();
+            if (timeOutDateTime - loadDateTime < 5000) {
+                alert('未安装app');
+            } else {
+                window.close();
+            }
+        },25);
+        window.location = taobaoUrl;
+    }
+    openApp3();
+</script>
+</html>

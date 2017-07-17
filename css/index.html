@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>css test</title>
+    <link rel="stylesheet" href="./modal/index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .wrap{
+
+            background-color: #bdff9d;
+        }
+        .son{
+            width: 100%;
+            height: 30px;
+            padding: 5px;
+            border-radius: 3px;
+            border-color: #f02717;
+            outline: 0;
+            border-width: 1px;
+            border-style: solid;
+            display: inline;
+            font-size: 14px;
+
+        }
+        .button{
+            /*padding: 10px;*/
+            height: 25px;
+            /*padding: px;*/
+            padding-left: 10px;
+            padding-right: 10px;
+            background-color:#f02717;
+            border:1px solid #f02717;
+            border-radius: 3px;
+            outline: none;
+            color: #fff;
+            font-size: 16px;
+            height: 45px;
+        }
+        .button:hover{
+            background-color: #f02717;
+        }
+        .button:active{
+            background-color: #bdff9d;
+        }
+        /*.button:focus{*/
+            /*background-color: aqua;*/
+        /*}*/
+        .button:disabled{
+            cursor: not-allowed;
+            background-color: #d8d8d8;
+            border-color:#d8d8d8 ;
+        }
+        .button.inset{
+            background-color: #fff;
+            color: #f02717;
+        }
+        .button.inset:disabled{
+            background-color: #d8d8d8;
+            /*color: #fff;*/
+        }
+        .button.small{
+            font-size: 14px;
+            height: 30px;
+        }
+        .button.block{
+            width: 100%;
+        }
+        .button+.button{
+            margin-top: 10px  ;
+        }
+    </style>
+</head>
+<body>
+    <div style="padding: 10px">
+        <input type="text" class="son" value="btn"><input type="text"> hello world!
+
+        <div class="modal-bg" id="modal">
+            <div class="modal">
+                <div class="modal-hd">title</div>
+                <div class="modal-bd">content</div>
+                <div class="modal-ft"><a href="#" class="btn" onclick="myClick()">确定</a> <a href="" class="btn">取消</a></div>
+            </div>
+        </div>
+        <button class="button block" > 按钮</button>
+        <button class="button block inset" > 按钮</button>
+        <button class="button" > 按钮</button>
+        <button class="button small" > 按钮</button>
+    </div>
+
+</body>
+<script>
+    function myClick(e) {
+
+        var el= document.getElementById('modal');
+        console.log(el);
+       el.setAttribute('class','modal-bg close');
+        console.log(el.style.className);
+    }
+</script>
+</html>

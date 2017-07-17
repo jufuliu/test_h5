@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js对象的创建</title>
+
+    <style>
+
+    </style>
+</head>
+<body>
+
+</body>
+<script>
+
+
+    //new Object（）对象的创建
+
+    var person=new Object();
+    person.name='孔子';
+    person.age='1000';
+    person.sayName=function () {
+        console.log('my name is '+this.name);
+    }
+    person.sayName();
+
+    //对象字面量方式创建对象
+    var person={
+        name:'孔子',
+        age:1000,
+        sayName:function () {
+            console.log('我是对象字面量模式的--'+this.name);
+        }
+    }
+    person.sayName();
+
+    //工长模式 创建对象
+    function createPerson(name,age) {
+        var o=new Object();
+        o.name=name;
+        o.age=age;
+        o.sayName=function () {
+            console.log('我是工厂模式的--'+this.name);
+        };
+        return o;
+    }
+    var person=createPerson('孔子',1000);
+    person.sayName();
+
+    //构造函数模式 创建对象
+    function Person(name, age) {
+        this.name=name;
+        this.age=age;
+        this.sayName=function () {
+            console.log('我是构造函数模式的--'+this.name);
+        }
+    }
+    var person=new Person('孔子',1000);
+
+
+//    原型模式 创建对象
+    function Person() {
+
+    }
+    Person.prototype.name='孔子';
+    Person.prototype.age=1000;
+    Person.prototype.sayName=function () {
+        console.log('我是原型模式的--'+this.name);
+    }
+    var person=new Person();
+
+
+    //组合使用构造函数模式和原型模式(使用最广)
+    function Person(name, age) {
+        this.name=name;
+        this.age=age;
+    }
+    Person.prototype.sayName=function () {
+        console.log('我是组合使用构造函数模式和原型模式的--'+this.name);
+    }
+    var person=new Person('孔子',1000);
+
+
+</script>
+</html>

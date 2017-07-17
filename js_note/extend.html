@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js继承</title>
+
+    <style>
+
+    </style>
+</head>
+<body>
+    <div>
+        原型链继承:什么是原型链,首先要知道 构造函数、原型、和实例对象之间的关系,每一个构造函数默认都有一个原型对象（prototype）,原型对象都包含一个constructor
+        指向构造函数,实例都有一个__proto__指向原型对象。
+        实例对象中的属性和方法若在实例中找不到时,就会去原型对象中去找。
+        那么假如我们让原型对象指向另一个类型的实例,会怎么样呢?这时原型对象包含了一个__proto__指向另一个原型对象,
+        而另一个原型对象则包含了一个constructor指向另一个构造函数,假如另一个原型又是另一个类型的实例,那么上述关系依然成立,如此层层递进,就构成了实例与原型的链条。
+        这就是原型链的基本概念。
+
+    </div>
+    <script>
+        //  实现继承方式一:原型链继承
+        function Super() {
+
+            this.name = 'super';
+        }
+        Super.prototype.getName = function () {
+            console.log(this.name);
+        }
+
+        function Sub() {
+            this.name = 'sub';
+        }
+        Sub.prototype = new Super();
+
+        var sub = new Sub();
+        sub.getName();
+
+    </script>
+
+    <script>
+        //  实现继承方式二:借用构造函数
+        function Super() {
+
+            this.colors =['red','green','blue'];
+        }
+        Super.prototype.getColors = function () {
+            console.log(this.colors);
+        }
+
+        function Sub() {
+           Super.call(this);
+        }
+        Sub.prototype = new Super();
+
+        var sub = new Sub();
+        sub.getColors();
+
+    </script>
+
+    <script>
+        //  实现继承方式二:借用构造函数
+        function Super(name) {
+
+            this.name=name;
+            this.colors =['red','green','blue'];
+        }
+
+        function Sub() {
+            Super.call(this,'subName');
+            this.age=12;
+        }
+        Sub.prototype = new Super();
+
+        var sub = new Sub();
+
+
+    </script>
+
+    <script>
+        //  实现继承方式二:组合使用原型链和借用构造函数方式
+        function Super(name) {
+
+            this.name=name;
+            this.colors =['red','green','blue'];
+        }
+        Super.prototype.getColors = function () {
+            console.log(this.colors);
+        }
+
+        function Sub() {
+//            继承属性
+            Super.call(this,'subName');
+            this.age=12;
+        }
+//        继承方法
+        Sub.prototype = new Super();
+
+        var sub = new Sub();
+        sub.getColors();
+
+    </script>
+</body>
+
+</html>

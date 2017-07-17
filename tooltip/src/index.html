@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tooltip</title>
+
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            background-color: #bdff9d;
+        }
+        .nav{
+            margin-top: 100px;
+            margin-left: 100px;
+        }
+        .tooltip{
+            position: relative;
+        }
+        .tooltip-content{
+            position: absolute;
+
+            padding: 0.3em 1em;
+            border-radius: 0.2em;
+            background-color: #000;
+            opacity: 0.8;
+            color: #fff;
+            display: none;
+        }
+        .tooltip-top .tooltip-content{
+            left: 50%;
+            bottom: 100%;
+            transform: translateX(-50%);
+            margin-bottom: 1em;
+        }
+        .tooltip-content:after{
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left:-0.5em;
+            border: 0.5em solid #fff;
+            border-color: #000 transparent transparent transparent;
+        }
+        .tooltip:hover .tooltip-content{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+       <span class="tooltip tooltip-top">
+           tooltip1
+           <span class="tooltip-content">tooltip1</span>
+       </span>
+    </div>
+
+</body>
+<script>
+
+    window.onload=function () {
+
+
+    }
+
+
+</script>
+</html>

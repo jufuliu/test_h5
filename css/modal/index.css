@@ -1,0 +1,44 @@
+.modal-bg{
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+    opacity:1;
+    transition: opacity 0.5s ease;
+}
+.modal-bg.close{
+    opacity: 0;
+}
+.modal{
+    width: 86%;
+    max-width: 400px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    margin: auto;
+    transform: translateY(-50%);
+    border-radius: 4px;
+    background-color: #fff;
+}
+.modal-hd{
+    text-align: center;
+    padding: 10px 8px;
+
+}
+.modal-bd{
+    text-align: center;
+    padding: 15px 8px;
+}
+.modal-ft{
+    display: flex;
+    text-align: center;
+}
+.modal-ft .btn{
+
+    width: 100%;
+    padding: 8px;
+    border-top: 1px solid #d8d8d8;
+}
